@@ -16,6 +16,7 @@ public class AuthService {
 
     public boolean signUp(SignupReqDto signupReqDto) {
         User user = signupReqDto.toUserEntity(passwordEncoder);
+        // 유효성 검사
         return userMapper.saveUser(user) > 0;
     }
 }

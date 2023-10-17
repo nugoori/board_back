@@ -9,9 +9,24 @@
         values(0, #{email}, #{password}, #{name}, #{nickname}, #{enabled})
     </insert>
 
-<!--    <select id="selectBlog" resultType="Blog">-->
-<!--        select * from Blog where id = #{id}-->
-<!--    </select>-->
+    <select id="duplicateUser" resultType="java.lang.Integer" parameterType="com.korit.board.entity.User">
+        select
+            (select
+                if(count(*) > 0, 1, 0)
+            from
+                user_tb
+            where
+                email = #{email}
+        )
+        + (select
+                if(count(*) > 0, 2, 0)
+            from
+                user_tb
+            where
+                nickname = #{nickname}
+        ) as result
+    </select>
+
 
 
 </mapper>

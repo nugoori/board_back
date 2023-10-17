@@ -7,4 +7,5 @@ import org.apache.ibatis.annotations.Mapper;
 @Mapper // -> xml 경로 정해준 곳을 찾아가서 xml파일을 IoC에 등록 가능한 class 파일로 컴파일 함
 public interface UserMapper {
     public int saveUser(User user);
+    public int duplicateUser();
 }

@@ -1,9 +1,13 @@
 package com.korit.board.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Builder
+@NoArgsConstructor // Mapper에서 xml파일을 class파일로 컴파일 할 때 사용될 수도 있음
+@AllArgsConstructor
 @Data
 public class User {
     private int userId;
