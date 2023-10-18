@@ -60,8 +60,6 @@ public class ValidAop {
         Object target = proceedingJoinPoint.proceed(); // 메소드의 body (return 값)
         System.out.println("후처리");
 
-        System.out.println(target + " tar1");
-
         return target;
     }
 }

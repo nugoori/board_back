@@ -21,7 +21,7 @@ public class ReturnAop {
         Object target = proceedingJoinPoint.proceed();
 
 //        Object result = proceedingJoinPoint.getArgs();
-        System.out.println("매개변수가 뭔지?" + proceedingJoinPoint);
+        System.out.println(proceedingJoinPoint);
 
         return target;
     }

@@ -7,4 +7,8 @@ spring:
 
 mybatis:
   mapper-locations:
-    -/mappers/*.xml
+    - /mappers/*.xml
+
+# secret key (https://jwt-keys.21no.de/) 여기 넣는 이유 - 이 파일을 git 올릴 때 제외 할 수 있음
+jwt:
+  secret: zmO+uCu7SQs64GP4MivcdOIwNgqPFZffIMZpBnqAHPjPZdfGjxDp1WmFof3wcnoC0HdK12i2P3PXwiZtCeb21g==
