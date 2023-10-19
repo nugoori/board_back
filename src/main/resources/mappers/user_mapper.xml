@@ -17,6 +17,14 @@
         values(0, #{email}, #{password}, #{name}, #{nickname}, #{enabled})
     </insert>
 
+    <update id="updateEnabledToEmail">
+        update user_tb
+        set
+            enabled = 1
+        where
+            email = #{email}
+    </update>
+
     <select id="duplicateUser" resultType="int" parameterType="com.korit.board.entity.User">
         select
             (select

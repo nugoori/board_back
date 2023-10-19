@@ -32,7 +32,6 @@ public class JwtProvider {
 
     public String generateJwtToken(Authentication authentication) {
         String email = authentication.getName();
-        PrincipalUser principalUser = (PrincipalUser) authentication.getPrincipal();
 
         Date date = new Date(new Date().getTime() + 1000 * 60 * 60 * 24);
 
@@ -40,12 +39,18 @@ public class JwtProvider {
                 setSubject("AccessToken")
                 .setExpiration(date)
                 .claim("email", email)
-                .claim("isEnabled", principalUser.isEnabled())
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }
 
-    // secret key로 jwtToken 분해 -> user 정보
+    public String getToken(String bearerToken) {
+        if(!StringUtils.hasText(bearerToken)) {
+            return null;
+        }
+        return bearerToken.substring("Bearer ".length());
+    }
+
+    // front 에서 로그인 요청으로 들어온 jwt토큰을 secret key로 jwtToken 분해 -> user 정보
     public Claims getClaims(String token) {
         Claims claims = null;
         try {
@@ -60,25 +65,29 @@ public class JwtProvider {
         return claims;
     }
 
-    public String getToken(String bearerToken) {
-        if(!StringUtils.hasText(bearerToken)) {
-            return null;
-        }
-        return bearerToken.substring("Bearer ".length());
-    }
-
     public Authentication getAuthentication(String token) {
-        // 이름 노출을 막기위해 Jwt token이 아닌 DB에서 찾아옴
         Claims claims = getClaims(token);
         if(claims == null) {
             return null;
         }
 
+        // 이름 노출을 막기위해 Jwt token이 아닌 DB에서 찾아옴
         User user = userMapper.findUserByEmail(claims.get("email").toString());
         if(user == null) {
             return null;
         }
         PrincipalUser principalUser = new PrincipalUser(user);
         return new UsernamePasswordAuthenticationToken(principalUser, null, principalUser.getAuthorities());
+    }
+
+    public String generateAuthMailToken(String email) {
+        Date date = new Date(new Date().getTime() + 1000 * 60 * 5);
+
+        return Jwts.builder()
+                .setSubject("AuthenticationEmailToken")
+                .setExpiration(date)
+                .claim("email", email)
+                .signWith(key, SignatureAlgorithm.HS256)
+                .compact();
     }
 }

@@ -33,9 +33,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/**")
                 .permitAll()
                 .anyRequest()
-                .authenticated()
+                .authenticated() // 인증을 거친다 securityContextHolder 안에 authentication이 있는지 없는지 검사
                 .and()
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class) // UsernamePasswordAuthenticationFilter -> securityContextHolder에 Authentication이 이 있는지 검사
                 .exceptionHandling()
                 .authenticationEntryPoint(principalEntryPoint);
     }

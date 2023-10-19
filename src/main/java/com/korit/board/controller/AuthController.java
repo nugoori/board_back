@@ -5,6 +5,7 @@ import com.korit.board.aop.annotation.ReturnAop;
 import com.korit.board.aop.annotation.TimeAop;
 import com.korit.board.aop.annotation.ValidAop;
 import com.korit.board.dto.SigninReqDto;
+import com.korit.board.service.AccountService;
 import com.korit.board.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
@@ -20,6 +21,7 @@ import org.springframework.http.ResponseEntity;
 public class AuthController {
 
     private final AuthService authService;
+    private final AccountService accountService;
 
     @ReturnAop
     @ArgsAop
@@ -34,7 +36,6 @@ public class AuthController {
     @ArgsAop
     @PostMapping("auth/signin")
     public ResponseEntity<?> signin(@RequestBody SigninReqDto signinReqDto) {
-
         return  ResponseEntity.ok(authService.signin(signinReqDto));
     }
 
@@ -44,6 +45,10 @@ public class AuthController {
         return ResponseEntity.ok(authService.authenticate(token));
     }
 
+    @GetMapping("/auth/mail")
+    public ResponseEntity<?> authenticateMail(String token) {
+        return ResponseEntity.ok(accountService.authenticateMail(token) ? "인증이 완료되었습니다." : "인증 실패");
+    }
 
 
 }
