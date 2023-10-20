@@ -17,6 +17,7 @@ public class User {
     private String name;
     private String nickname;
     private int enabled; // 1(인증O) or 0(인증X, 기본값)
+    private String profileUrl;
 
     public PrincipalRespDto toPrincipalDto() {
         return PrincipalRespDto.builder()
@@ -25,6 +26,7 @@ public class User {
                 .name(name)
                 .nickname(nickname)
                 .enabled(enabled > 0)
+                .profileUrl(profileUrl)
                 .build();
     }
 }
