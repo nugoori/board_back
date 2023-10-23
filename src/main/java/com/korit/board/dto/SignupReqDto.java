@@ -20,6 +20,10 @@ public class SignupReqDto {
     @NotBlank
     private String nickname;
 
+    private String oauth2Id;
+    private String profileImg;
+    private String provider;
+
     // setter로 serivce에서 바꾸는 것보다 dto에서 바꿔주는게 service부분이 깔끔해진다(리펙터링). setter로 바꾸는 것과 builder로 만드는게 똑같다
     public User toUserEntity(BCryptPasswordEncoder passwordEncoder) {
         return User.builder()
@@ -27,6 +31,9 @@ public class SignupReqDto {
                 .password(passwordEncoder.encode(password))
                 .name(name)
                 .nickname(nickname)
+                .oauth2Id(oauth2Id)
+                .provider(provider)
+                .profileUrl(profileImg)
                 .build();
     }
 }
