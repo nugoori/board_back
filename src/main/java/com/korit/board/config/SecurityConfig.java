@@ -36,8 +36,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable(); // csrf = SSR 할 때 사용하는 토큰?
 
         http.authorizeRequests() // authorizeHttpRequests 이거 쓰면 안됨
-                .antMatchers("/auth/**")
+                .antMatchers("/auth/**", "/board/**", "/boards/**")
                 .permitAll()
+                .antMatchers("/board/content")
+                .authenticated()
                 .anyRequest()
                 .authenticated() // 인증을 거친다 securityContextHolder 안에 authentication이 있는지 없는지 검사
                 .and()
@@ -48,7 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .oauth2Login()
                 .loginPage("http://localhost/auth/signin") // 소셜로그인을 하면 --> endpoint
                 .successHandler(oauth2SuccessHandler)
-                .userInfoEndpoint() // yml의 Uri들에 요청을보내 정보를 들고 service에 OAuth2UserRequest로 전달 // controller같은 역할
+                .userInfoEndpoint() //** yml의 Uri들이 동작하고, 정보를 들고 service에 loadUser메소드에 OAuth2UserRequest로 전달 // controller같은 역할
                 .userService(principalUserDetailsService); // == authentication manager
     }
 

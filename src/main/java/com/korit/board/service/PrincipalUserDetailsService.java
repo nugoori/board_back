@@ -50,7 +50,7 @@ public class PrincipalUserDetailsService implements UserDetailsService, OAuth2Us
 
         response.put("provider", provider);
         
-        return new DefaultOAuth2User(new ArrayList<>(), response, "name"); // 정상 리턴(== authentication객체로 변환) --> successHandler의 authentication?
+        return new DefaultOAuth2User(new ArrayList<>(), response, "id"); // 정상 리턴(== authentication객체로 변환) --> successHandler의 onAuthenticationSuccess에 authentication객체로 전달
     }
 }
 

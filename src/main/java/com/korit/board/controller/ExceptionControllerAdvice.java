@@ -2,7 +2,7 @@ package com.korit.board.controller;
 
 import com.korit.board.exception.AuthMailException;
 import com.korit.board.exception.DuplicateException;
-import com.korit.board.exception.MissmatchPasswordException;
+import com.korit.board.exception.MismatchPasswordException;
 import com.korit.board.exception.ValidException;
 import io.jsonwebtoken.JwtException;
 import org.springframework.http.HttpStatus;
@@ -63,8 +63,8 @@ public class ExceptionControllerAdvice {
         return ResponseEntity.ok().body(message);
     }
 
-    @ExceptionHandler(MissmatchPasswordException.class)
-    public ResponseEntity<?> missmatchPasswordException(MissmatchPasswordException missmatchPasswordException) {
+    @ExceptionHandler(MismatchPasswordException.class)
+    public ResponseEntity<?> missmatchPasswordException(MismatchPasswordException missmatchPasswordException) {
         Map<String, String> message = new HashMap<>();
         message.put("mismatched", missmatchPasswordException.getMessage());
         return ResponseEntity.badRequest().body(message);

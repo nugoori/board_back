@@ -4,7 +4,7 @@ import com.korit.board.dto.UpdatePasswordReqDto;
 import com.korit.board.dto.UpdateProfileImgReqDto;
 import com.korit.board.entity.User;
 import com.korit.board.exception.AuthMailException;
-import com.korit.board.exception.MissmatchPasswordException;
+import com.korit.board.exception.MismatchPasswordException;
 import com.korit.board.jwt.JwtProvider;
 import com.korit.board.repository.UserMapper;
 import com.korit.board.security.PrincipalUser;
@@ -61,7 +61,7 @@ public class AccountService {
         }
 
         if(!Objects.equals(updatePasswordReqDto.getNewPassword(), updatePasswordReqDto.getCheckNewPassword())) {
-            throw new MissmatchPasswordException();
+            throw new MismatchPasswordException();
         }
 
         user.setPassword(passwordEncoder.encode(updatePasswordReqDto.getNewPassword()));
