@@ -22,6 +22,17 @@
         <result property="boardLikeCount" column="board_like_count" />
     </resultMap>
 
+    <update id="updateBoard" parameterType="hashmap"  >
+        update
+            board_tb
+        set
+            board_title = #{boardTitle},
+            board_content = #{boardContent},
+        where
+            board_id = #{boardId}
+            and email = #{email}
+    </update>
+
     <select id="getBoardCategories" resultMap="boardCategoryMap" >
         select
             bct.board_category_id,
@@ -195,6 +206,13 @@
         delete
         from
             board_like_tb
+        where
+            board_id = #{boardId}
+            and email = #{email}
+    </delete>
+
+    <delete id="deleteBoard" parameterType="hashmap">
+        delete from board_tb
         where
             board_id = #{boardId}
             and email = #{email}

@@ -1,6 +1,7 @@
 package com.korit.board.entity;
 
 import com.korit.board.dto.BoardListRespDto;
+import com.korit.board.dto.UpdateBoardReqDto;
 import com.korit.board.dto.getBoardRespDto;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -39,7 +40,6 @@ public class Board {
 
     public getBoardRespDto toBoardDto() {
         return getBoardRespDto.builder()
-                .boardId(boardId)
                 .boardTitle(boardTitle)
                 .boardCategoryId(boardCategoryId)
                 .boardContent(boardContent)

@@ -3,6 +3,7 @@ package com.korit.board.service;
 import com.korit.board.dto.*;
 import com.korit.board.entity.Board;
 import com.korit.board.entity.BoardCategory;
+import com.korit.board.entity.UpdateBoard;
 import com.korit.board.repository.BoardMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -96,5 +97,32 @@ public class BoardService {
         paramsMap.put("boardId", boardId);
         paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
         return boardMapper.deleteLike(paramsMap) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public boolean deleteBoard(int boardId) {
+        Map<String, Object> paramsMap = new HashMap<>();
+        paramsMap.put("boardId", boardId);
+        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
+        return boardMapper.deleteBoard(paramsMap) > 0;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    public getBoardRespDto getBoardUpdate(int boardId) {
+        return boardMapper.getBoardByBoardId(boardId).toBoardDto();
+    }
+
+    public boolean updateBoard(int boardId, UpdateBoardReqDto updateBoardReqDto) {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Board updateBoard = updateBoardReqDto.toBoardEntity(email);
+        String title = updateBoard.getBoardTitle();
+        String content = updateBoard.getBoardContent();
+        Map<String, Object> updateMap = new HashMap<>();
+        updateMap.put("boardId", boardId);
+        updateMap.put("boardTitle", title);
+        updateMap.put("boardContent", content);
+        updateMap.put("email", email);
+
+        return boardMapper.updateBoard(updateMap) > 0;
     }
 }

@@ -36,7 +36,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable(); // csrf = SSR 할 때 사용하는 토큰?
 
         http.authorizeRequests() // authorizeHttpRequests 이거 쓰면 안됨
-                .antMatchers("/board/content", "board/like/**")
+                .antMatchers("/board/content", "board/like/**", "board/delete/**")
                 .authenticated()
                 .antMatchers("/auth/**", "/board/**", "/boards/**")
                 .permitAll()

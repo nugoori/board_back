@@ -4,6 +4,7 @@ import com.korit.board.aop.annotation.ArgsAop;
 import com.korit.board.aop.annotation.ValidAop;
 import com.korit.board.dto.RegisterBoardReqDto;
 import com.korit.board.dto.SearchBoardListReqDto;
+import com.korit.board.dto.UpdateBoardReqDto;
 import com.korit.board.dto.WriteBoardReqDto;
 import com.korit.board.service.BoardService;
 import lombok.RequiredArgsConstructor;
@@ -63,5 +64,25 @@ public class BoardController {
     @DeleteMapping("/board/like/{boardId}")
     public ResponseEntity<?> cancelLike(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.cancelLike(boardId));
+    }
+
+    @DeleteMapping("/board/delete/{boardId}")
+    public ResponseEntity<?> deleteBoard(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.deleteBoard(boardId));
+    }
+
+    @GetMapping("/board/update/{boardId}")
+    public ResponseEntity<?> getUpdateBoard(@PathVariable int boardId) {
+        return ResponseEntity.ok(boardService.getBoardUpdate(boardId));
+    }
+
+//    @GetMapping("/board/categories")
+//    public ResponseEntity<?> getCategoriesUpdate() {
+//        return ResponseEntity.ok(boardService.getBoardCategoriesAll());
+//    }
+
+    @PutMapping("/board/update/{boardId}")
+    public ResponseEntity<?> updateBoard(@PathVariable int boardId, @RequestBody UpdateBoardReqDto updateBoardReqDto) {
+        return ResponseEntity.ok(boardService.updateBoard(boardId, updateBoardReqDto));
     }
 }
