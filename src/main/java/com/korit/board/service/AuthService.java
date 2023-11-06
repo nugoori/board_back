@@ -73,7 +73,7 @@ public class AuthService {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(signinReqDto.getEmail(), signinReqDto.getPassword());
 
-        // 2 Authentication이 호출? 되면 -> loaduserbyusername
+        // 2 authenticate추상 메서드가 호출? 되면 -> loaduserbyusername
 //        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         // PrincipalUser - userDetails 에서 검사 할 때 비밀번호 검사보다 isEnabled가 먼저 검사해서 아래 방법으로 순서를 다르게 
         Authentication authentication = principalProvider.authenticate(authenticationToken);

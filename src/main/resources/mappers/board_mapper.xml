@@ -22,17 +22,6 @@
         <result property="boardLikeCount" column="board_like_count" />
     </resultMap>
 
-    <update id="updateBoard" parameterType="hashmap"  >
-        update
-            board_tb
-        set
-            board_title = #{boardTitle},
-            board_content = #{boardContent},
-        where
-            board_id = #{boardId}
-            and email = #{email}
-    </update>
-
     <select id="getBoardCategories" resultMap="boardCategoryMap" >
         select
             bct.board_category_id,
@@ -211,11 +200,31 @@
             and email = #{email}
     </delete>
 
-    <delete id="deleteBoard" parameterType="hashmap">
+    <update id="updateBoard" parameterType="com.korit.board.entity.Board"  >
+        update
+            board_tb
+        set
+            board_title = #{boardTitle},
+            board_content = #{boardContent},
+            board_category_id = #{boardCategoryId}
+        where
+            board_id = #{boardId}
+<!--        and (email = #{email}-->
+<!--            or 1 = (select-->
+<!--                        count(*)-->
+<!--                    from-->
+<!--                        authority_tb at-->
+<!--                        left outer join user_tb ut on(ut.role_id = at.role_id)-->
+<!--                    where-->
+<!--                        role_id = 3-->
+<!--                    and ut.email = #{email}))-->
+    </update>
+
+    <delete id="deleteBoard" >
         delete from board_tb
         where
             board_id = #{boardId}
-            and email = #{email}
+<!--            and email = #{email}-->
     </delete>
 
 </mapper>

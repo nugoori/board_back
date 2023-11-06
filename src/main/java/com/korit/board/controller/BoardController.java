@@ -66,23 +66,24 @@ public class BoardController {
         return ResponseEntity.ok(boardService.cancelLike(boardId));
     }
 
-    @DeleteMapping("/board/delete/{boardId}")
+    @DeleteMapping("/board/{boardId}")
     public ResponseEntity<?> deleteBoard(@PathVariable int boardId) {
         return ResponseEntity.ok(boardService.deleteBoard(boardId));
     }
 
-    @GetMapping("/board/update/{boardId}")
-    public ResponseEntity<?> getUpdateBoard(@PathVariable int boardId) {
-        return ResponseEntity.ok(boardService.getBoardUpdate(boardId));
-    }
-
-//    @GetMapping("/board/categories")
-//    public ResponseEntity<?> getCategoriesUpdate() {
-//        return ResponseEntity.ok(boardService.getBoardCategoriesAll());
+    // 굳이 필요 없었음
+//    @GetMapping("/board/update/{boardId}")
+//    public ResponseEntity<?> getUpdateBoard(@PathVariable int boardId) {
+//        return ResponseEntity.ok(boardService.getBoardUpdate(boardId));
 //    }
 
-    @PutMapping("/board/update/{boardId}")
-    public ResponseEntity<?> updateBoard(@PathVariable int boardId, @RequestBody UpdateBoardReqDto updateBoardReqDto) {
+    // 수정 할 때 중요한 것! 작성한 사람만
+    @ArgsAop
+    @ValidAop
+    @PutMapping("/board/{boardId}")
+    public ResponseEntity<?> updateBoard(@PathVariable int boardId,
+                                         @Valid @RequestBody UpdateBoardReqDto updateBoardReqDto,
+                                         BindingResult bindingResult) {
         return ResponseEntity.ok(boardService.updateBoard(boardId, updateBoardReqDto));
     }
 }

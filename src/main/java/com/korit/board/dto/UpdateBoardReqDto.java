@@ -1,8 +1,6 @@
 package com.korit.board.dto;
 
 import com.korit.board.entity.Board;
-import com.korit.board.entity.UpdateBoard;
-import lombok.Builder;
 import lombok.Data;
 
 import javax.validation.constraints.Min;
@@ -10,14 +8,20 @@ import javax.validation.constraints.NotBlank;
 
 @Data
 public class UpdateBoardReqDto {
+    @NotBlank
     private String title;
+    @NotBlank
     private String content;
-    private String email;
+    @Min(0)
+    private int categoryId; // int는 notBlank안걸림 최대값 최소값으로 지정
+    @NotBlank
+    private String categoryName;
 
     public Board toBoardEntity(String email) {
         return Board.builder()
                 .boardTitle(title)
                 .boardContent(content)
+                .boardCategoryId(categoryId)
                 .email(email)
                 .build();
     }

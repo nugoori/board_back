@@ -101,28 +101,22 @@ public class BoardService {
 
     @Transactional(rollbackFor = Exception.class)
     public boolean deleteBoard(int boardId) {
-        Map<String, Object> paramsMap = new HashMap<>();
-        paramsMap.put("boardId", boardId);
-        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
-        return boardMapper.deleteBoard(paramsMap) > 0;
+//        Map<String, Object> paramsMap = new HashMap<>();
+//        paramsMap.put("boardId", boardId);
+//        paramsMap.put("email", SecurityContextHolder.getContext().getAuthentication().getName());
+        return boardMapper.deleteBoard(boardId) > 0;
     }
 
-    @Transactional(rollbackFor = Exception.class)
     public getBoardRespDto getBoardUpdate(int boardId) {
         return boardMapper.getBoardByBoardId(boardId).toBoardDto();
     }
 
+    // email검사를 DB에서 까지는 해 줄 필요 없는 듯?
+    @Transactional(rollbackFor = Exception.class)
     public boolean updateBoard(int boardId, UpdateBoardReqDto updateBoardReqDto) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Board updateBoard = updateBoardReqDto.toBoardEntity(email);
-        String title = updateBoard.getBoardTitle();
-        String content = updateBoard.getBoardContent();
-        Map<String, Object> updateMap = new HashMap<>();
-        updateMap.put("boardId", boardId);
-        updateMap.put("boardTitle", title);
-        updateMap.put("boardContent", content);
-        updateMap.put("email", email);
-
-        return boardMapper.updateBoard(updateMap) > 0;
+        updateBoard.setBoardId(boardId);
+        return boardMapper.updateBoard(updateBoard) > 0;
     }
 }
